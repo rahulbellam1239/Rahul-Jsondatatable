@@ -1,0 +1,89 @@
+<html>
+    <title>
+        vuejs-paginator
+    </title>
+    <head>
+
+    
+    
+    </head>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+
+
+    <body>
+
+        <div id="tabledemo">
+            <h3>Vue Datatable example</h3>
+            Filter by anything: <input v-model="search">
+            <hr>
+            <data-table :users="filteredUsers"></data-table>
+            
+          </div>
+
+            
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/vue@2.1.8/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vuejs-paginate/2.1.0/index.js"></script>
+  
+
+    <script>
+
+       
+
+new Vue({
+  el: '#tabledemo',
+  data: {
+    users: [],
+    search: ''
+  },
+  computed: {
+    filteredUsers: function () {
+      let self = this
+      let search = self.search.toLowerCase()
+      return self.users.filter(function (user) {
+        return 	user.username.toLowerCase().indexOf(search) !== -1 ||
+          user.name.toLowerCase().indexOf(search) !== -1 ||
+          user.phone.indexOf(search) !== -1 ||
+          user.email.toLowerCase().indexOf(search) !== -1 ||
+          user.website.toLowerCase().indexOf(search) !== -1
+      })
+    }
+  },
+  mounted() {
+    let vm = this;
+    $.ajax({
+      url: 'https://jsonplaceholder.typicode.com/users',
+      success(res) { 
+        vm.users = res;
+      }
+    });
+  },
+  methods:{
+    buttonPressed(){
+      alert('Button was pressed');
+    },
+    createDataTable () {      
+      if(this.users){
+        if($.fn.dataTable.isDataTable('#myTable')) $('#myTable').DataTable().destroy();
+        $('#myTable').DataTable({
+          columns: this.headers
+        });
+      }
+    }
+  },
+  updated(){  
+    this.createDataTable();
+  }
+});
+    </script>
+
+</body>
+
+</html>
